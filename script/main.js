@@ -5,6 +5,8 @@ class Game {
     this.perSecondValue = 0;
     this.clickUpgrades = [];
     this.autoUpgrades = [];
+    this.lastUpdateTime = Date.now();
+    this.animationFrameId = null;
     this.init();
   }
 
@@ -74,11 +76,12 @@ class Game {
     );
 
     this.setupTooltip();
+    this.startAutoClick();
 
     this.updateScore();
     this.renderUpgrades();
 
-    setInterval(() => this.autoClick(), 1000);
+    // setInterval(() => this.autoClick(), 1000);
   }
 
   click() {
@@ -86,62 +89,47 @@ class Game {
     this.updateScore();
   }
 
-  autoClick() {
-    this.score += this.perSecondValue;
+  smoothAutoClick() {
+    const now = Date.now();
+    const deltaTime = (now - this.lastUpdateTime) / 1000; //conversion en seconde
+    this.lastUpdateTime = now;
+
+    // Calculate the score increase for this frame
+    const scoreIncrease = this.perSecondValue * deltaTime;
+    this.score += scoreIncrease;
+
     this.updateScore();
+
+    // Request the next animation frame
+    this.animationFrameId = requestAnimationFrame(() => this.smoothAutoClick());
   }
 
-  updateScore() {
-    const scoreElement = document.getElementById("score");
-    const oldScore = parseInt(scoreElement.textContent);
-    const newScore = Math.floor(this.score);
-
-    if (newScore !== oldScore) {
-      scoreElement.textContent = newScore;
-      scoreElement.classList.remove("updated");
-      void scoreElement.offsetWidth; // Trigger reflow
-      scoreElement.classList.add("updated");
+  startAutoClick() {
+    if (!this.animationFrameId) {
+      this.lastUpdateTime = Date.now();
+      this.smoothAutoClick();
     }
-
-    this.perSecondDisplay.textContent = `${this.perSecondValue.toFixed(
-      1
-    )} par second`;
   }
 
-  updateScoreDisplay() {
-    const scoreElement = document.getElementById("score");
-    const newScore = Math.floor(this.score).toString().padStart(10, "0");
-    const oldScore = scoreElement.textContent.padStart(10, "0");
-
-    scoreElement.innerHTML = "";
-
-    for (let i = 0; i < 10; i++) {
-      const digitSpan = document.createElement("span");
-      digitSpan.className = "score-digit";
-      digitSpan.textContent = newScore[i];
-
-      if (newScore[i] !== oldScore[i]) {
-        digitSpan.classList.add("updated");
-      }
-
-      scoreElement.appendChild(digitSpan);
-    }
-
-    // Remove leading zeros
-    while (
-      scoreElement.firstChild.textContent === "0" &&
-      scoreElement.children.length > 1
-    ) {
-      scoreElement.removeChild(scoreElement.firstChild);
+  stopAutoClick() {
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
     }
   }
 
   updateScore() {
-    this.updateScoreDisplay();
-
+    const displayScore = Math.floor(this.score);
+    this.updateScoreDisplay(displayScore);
     this.perSecondDisplay.textContent = `${this.perSecondValue.toFixed(
       1
     )} par seconde`;
+  }
+
+  updateScoreDisplay(displayScore) {
+    const scoreElement = document.getElementById("score");
+    // Update the score display
+    scoreElement.textContent = Math.floor(displayScore).toLocaleString();
   }
 
   addClickUpgrade(upgrade) {
@@ -167,11 +155,14 @@ class Game {
         .replace(" ", "-")}.png`;
 
       button.classList.add("upgrade-button", "button");
-      button.textContent = `${upgrade.name} - Cost: ${Math.floor(
-        upgrade.cost
-      )}`;
+      button.innerHTML = `<div> <h3>${
+        upgrade.name
+      }</h3> <p> - Cost: ${Math.floor(upgrade.cost)} </p> </div>`;
+
       button.appendChild(img);
+
       button.dataset.description = upgrade.description; // Store description in data attribute
+
       button.addEventListener("click", () => this.buyUpgrade(upgrade));
       this.addTooltipListeners(button);
       container.appendChild(button);
@@ -229,6 +220,9 @@ class Game {
 
       this.loadUpgradeCategory(gameData.clickUpgrades, this.clickUpgrades);
       this.loadUpgradeCategory(gameData.autoUpgrades, this.autoUpgrades);
+
+      this.stopAutoClick();
+      this.startAutoClick();
 
       this.updateScore();
       this.renderUpgrades();
