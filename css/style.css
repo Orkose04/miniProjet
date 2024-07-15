@@ -174,16 +174,6 @@ body {
   align-self: center;
 }
 
-/* @keyframes appearArticle {
-  0% {
-    opacity: 0.2;
-    translate: 0 30px;
-  }
-  to {
-    translate: 0 0;
-  }
-} */
-
 /* ventes des CPC */
 .upgrade-button {
   min-width: 90%;
@@ -200,8 +190,7 @@ body {
   padding: 5px 10px;
   cursor: pointer;
   margin-bottom: 10px;
-  /* animation: appearArticle 0.5s; */
-  /* position: relative; */
+
   font-family: "Poppins";
   font-size: 1.1em;
   margin-top: 5px;

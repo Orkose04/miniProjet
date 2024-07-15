@@ -5,6 +5,8 @@ class Game {
     this.perSecondValue = 0;
     this.clickUpgrades = [];
     this.autoUpgrades = [];
+    this.prestigeMultiplier = 1;
+    this.prestigeRequirement = 1000;
     this.lastUpdateTime = Date.now();
     this.animationFrameId = null;
     this.init();
@@ -20,12 +22,19 @@ class Game {
     this.autoUpgradesContainer = document.getElementById(
       "auto-upgrades-container"
     );
+
+    const prestigeButton = document.getElementById("prestige-button");
+    prestigeButton.dataset.description = `Requirement: ${this.prestigeRequirement}`;
+    this.addTooltipListeners(prestigeButton);
+
     this.saveButton = document.getElementById("save-button");
     this.loadButton = document.getElementById("load-button");
 
     this.clickButton.addEventListener("click", () => this.click());
     this.saveButton.addEventListener("click", () => this.saveGame());
     this.loadButton.addEventListener("click", () => this.loadGame());
+
+    prestigeButton.addEventListener("click", () => this.prestige());
 
     this.addClickUpgrade(
       new Upgrade("Cursor", "Increases click value by 1", 10, 1.5, () => {
@@ -75,6 +84,8 @@ class Game {
       )
     );
 
+    this.updatePrestigeDisplay;
+
     this.setupTooltip();
     this.startAutoClick();
 
@@ -85,7 +96,7 @@ class Game {
   }
 
   click() {
-    this.score += this.clickValue;
+    this.score += this.clickValue * this.prestigeMultiplier;
     this.updateScore();
   }
 
@@ -95,7 +106,8 @@ class Game {
     this.lastUpdateTime = now;
 
     // Calculate the score increase for this frame
-    const scoreIncrease = this.perSecondValue * deltaTime;
+    const scoreIncrease =
+      this.perSecondValue * this.prestigeMultiplier * deltaTime;
     this.score += scoreIncrease;
 
     this.updateScore();
@@ -169,6 +181,37 @@ class Game {
     });
   }
 
+  prestige() {
+    if (this.score >= this.prestigeRequirement) {
+      this.prestigeMultiplier += 0.1; // 10% increase per prestige point
+      this.score = 0;
+      this.clickValue = 1;
+      this.perSecondValue = 0;
+      this.prestigeRequirement *= 10; // Increase requirement for next prestige
+
+      // Reset upgrades
+      this.clickUpgrades.forEach((upgrade) => {
+        upgrade.cost = upgrade.initialCost;
+        upgrade.purchased = 0;
+      });
+      this.autoUpgrades.forEach((upgrade) => {
+        upgrade.cost = upgrade.initialCost;
+        upgrade.purchased = 0;
+      });
+
+      this.updateScore();
+      this.renderUpgrades();
+      this.updatePrestigeDisplay();
+    }
+  }
+
+  updatePrestigeDisplay() {
+    const multiplierElement = document.getElementById("prestige-multiplier");
+    const prestigeButton = document.getElementById("prestige-button");
+    multiplierElement.textContent = `x${this.prestigeMultiplier.toFixed(1)}`;
+    prestigeButton.dataset.description = `Requirement = ${this.prestigeRequirement}`;
+  }
+
   addTooltipListeners(element) {
     const tooltip = document.getElementById("tooltip");
     element.addEventListener("mouseenter", () => {
@@ -205,6 +248,8 @@ class Game {
         cost: upgrade.cost,
         purchased: upgrade.purchased,
       })),
+      prestigeMultiplier: this.prestigeMultiplier,
+      prestigeRequirement: this.prestigeRequirement,
     };
     localStorage.setItem("clickerGameSave", JSON.stringify(gameData));
     alert("Game saved!");
@@ -218,8 +263,13 @@ class Game {
       this.clickValue = gameData.clickValue;
       this.perSecondValue = gameData.perSecondValue;
 
+      this.prestigeMultiplier = gameData.prestigeMultiplier || 1;
+      this.prestigeRequirement = gameData.prestigeRequirement || 1000000;
+
       this.loadUpgradeCategory(gameData.clickUpgrades, this.clickUpgrades);
       this.loadUpgradeCategory(gameData.autoUpgrades, this.autoUpgrades);
+
+      this.updatePrestigeDisplay();
 
       this.stopAutoClick();
       this.startAutoClick();
@@ -257,6 +307,7 @@ class Upgrade {
     this.name = name;
     this.description = description;
     this.cost = cost;
+    this.initialCost = cost;
     this.costMultiplier = costMultiplier;
     this.effect = effect;
     this.purchased = 0;
