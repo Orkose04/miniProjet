@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Comte Bomm</title>
+  </head>
+  <body>
+    <div class="left-side">
+      <div class="statBar">
+        <p>Burger Food</p>
+        <h1>Score:</h1>
+        <h2 id="score">0</h2>
+        <span id="per-second">Or par seconde : 0.0</span>
+      </div>
+      <button id="click-button"></button>
+    </div>
+    <!-- Espace centrale -->
+    <div class="center-side">
+      <img src="./images/level1.png" alt="level" />
+      <div class="save-buttons">
+        <button class="button" id="save-button">Save</button>
+        <button class="button" id="load-button">Load</button>
+      </div>
+    </div>
+    <!-- Partie droite de l'ecran -->
+    <div class="right-side">
+      <div class="navWindow">
+        <button
+          class="category activeWindow"
+          id="cpcBtn"
+          onclick="showUpgradeWindow('cpcBtn', 'click-upgrades-container')"
+        >
+          CPC
+        </button>
+        <button
+          class="category unactiveWindow"
+          id="cpsBtn"
+          onclick="showUpgradeWindow('cpsBtn', 'auto-upgrades-container')"
+        >
+          CPS
+        </button>
+      </div>
+      <!-- vente des articles CPC -->
+      <!-- <div class="bigShopCPC">
+        <br />
+        <div class="blocArticle">
+          <img src="./images/plat/chicken_tacos.webp" alt="chicken" />
+          <div>
+            <h3>Chicken</h3>
+            <p class="priceArticle">2.200 Ar</p>
+          </div>
+          <div class="infoBox">
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
+              laudantium numquam unde beatae iusto corrupti. Sit quas animi
+              architecto nam tenetur, modi excepturi distinctio soluta inventore
+              quidem, odio, rerum at?
+            </p>
+          </div>
+        </div>
+        <div class="blocArticle">
+          <img src="./images/plat/pizza_fromage.webp" alt="chicken" />
+          <div>
+            <h3>PIZZA</h3>
+            <p class="priceArticle">2.200 Ar</p>
+          </div>
+          <div class="infoBox">
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
+              laudantium numquam unde beatae iusto corrupti. Sit quas animi
+              architecto nam tenetur, modi excepturi distinctio soluta inventore
+              quidem, odio, rerum at?
+            </p>
+          </div>
+        </div>
+        <div class="blocArticle">
+          <img src="./images/plat/pork-steak.webp" alt="chicken" />
+          <div>
+            <h3>Steak</h3>
+            <p class="priceArticle">2.200 Ar</p>
+          </div>
+          <div class="infoBox">
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
+              laudantium numquam unde beatae iusto corrupti. Sit quas animi
+              architecto nam tenetur, modi excepturi distinctio soluta inventore
+              quidem, odio, rerum at?
+            </p>
+          </div>
+        </div>
+      </div>-->
+      <!-- Ameliorations par Click -->
+      <div id="click-upgrades-container" class="upgrades active"></div>
+
+      <!-- vente des articles CPC --
+      <div class="bigShopCPS">
+        <br />
+        <div class="blocArticle">
+          <img src="./images/ingredients/jambon.webp" alt="chicken" />
+          <div>
+            <h3>Chicken</h3>
+            <p class="priceArticle">2.200 Ar</p>
+          </div>
+          <div class="infoBox">
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
+              laudantium numquam unde beatae iusto corrupti. Sit quas animi
+              architecto nam tenetur, modi excepturi distinctio soluta inventore
+              quidem, odio, rerum at?
+            </p>
+          </div>
+        </div>
+        <div class="blocArticle">
+          <img src="./images/ingredients/Oignon.webp" alt="chicken" />
+          <div>
+            <h3>Oignon</h3>
+            <p class="priceArticle">2.200 Ar</p>
+          </div>
+          <div class="infoBox">
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
+              laudantium numquam unde beatae iusto corrupti. Sit quas animi
+              architecto nam tenetur, modi excepturi distinctio soluta inventore
+              quidem, odio, rerum at?
+            </p>
+          </div>
+        </div>
+        <div class="blocArticle">
+          <img src="./images/ingredients/salade.webp" alt="chicken" />
+          <div>
+            <h3>Salade</h3>
+            <p class="priceArticle">2.200 Ar</p>
+          </div>
+          <div class="infoBox">
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
+              laudantium numquam unde beatae iusto corrupti. Sit quas animi
+              architecto nam tenetur, modi excepturi distinctio soluta inventore
+              quidem, odio, rerum at?
+            </p>
+          </div>
+        </div>
+      </div> -->
+      <!-- Ameliorations par seconde -->
+      <div id="auto-upgrades-container" class="upgrades"></div>
+
+      <!-- Bulle d'information -->
+      <div id="tooltip"></div>
+    </div>
+  </body>
+  <!-- <script src="./script/onglet.js"></script> -->
+  <script src="script/main.js"></script>
+</html>
