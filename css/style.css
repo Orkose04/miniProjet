@@ -103,6 +103,14 @@ body {
   font-weight: 800;
   text-shadow: 0 2px 5px #fff;
 }
+
+#score {
+  background-image: url(../Assets\ V3/btn1.png);
+  background-size: 30%;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
 #per-second {
   font-family: "Arial", sans-serif;
   font-size: 0.8em;
@@ -117,6 +125,7 @@ body {
   /* background-color: transparent; */
   height: var(--clk-btn-size);
   width: var(--clk-btn-size);
+  max-width: 25rem;
   align-self: center;
   background: url("../assets/click-the-banana.png") center no-repeat;
   background-size: contain;
@@ -238,6 +247,11 @@ body {
     width: var(--size);
     height: var(--size);
   }
+}
+
+.world-windows {
+  position: absolute;
+  top: 1rem;
 }
 
 .save-buttons {

@@ -3,6 +3,7 @@ class Game {
     this.score = 0;
     this.clickValue = 1;
     this.perSecondValue = 0;
+    this.currentWorld = 1;
     this.clickUpgrades = [];
     this.autoUpgrades = [];
     this.prestigeMultiplier = 1;
@@ -35,54 +36,6 @@ class Game {
     this.loadButton.addEventListener("click", () => this.loadGame());
 
     prestigeButton.addEventListener("click", () => this.prestige());
-
-    // this.addClickUpgrade(
-    //   new Upgrade("Cursor", "Increases click value by 1", 10, 1.5, () => {
-    //     this.clickValue += 1;
-    //   })
-    // );
-
-    // this.addClickUpgrade(
-    //   new Upgrade(
-    //     "Super Cursor",
-    //     "Increases click value by 5",
-    //     100,
-    //     1.7,
-    //     () => {
-    //       this.clickValue += 5;
-    //     }
-    //   )
-    // );
-
-    // this.addClickUpgrade(
-    //   new Upgrade("Banana", "Banana is truth", 1, 2, () => {
-    //     this.clickValue += 10;
-    //   })
-    // );
-
-    // this.addAutoUpgrade(
-    //   new Upgrade(
-    //     "Auto-Clicker",
-    //     "Generates 1 point per second",
-    //     50,
-    //     1.5,
-    //     () => {
-    //       this.perSecondValue += 1;
-    //     }
-    //   )
-    // );
-
-    // this.addAutoUpgrade(
-    //   new Upgrade(
-    //     "Mega Auto-Clicker",
-    //     "Generates 5 points per second",
-    //     200,
-    //     1.7,
-    //     () => {
-    //       this.perSecondValue += 5;
-    //     }
-    //   )
-    // );
 
     this.addClickUpgrade(
       new Upgrade(
@@ -136,7 +89,150 @@ class Game {
       )
     );
 
-    this.updatePrestigeDisplay;
+    this.addAutoUpgrade(
+      new Upgrade(
+        "Système d'Arrosage",
+        "Arrosage automatisé pour des bananiers en meilleure santé",
+        1,
+        5000,
+        2.2,
+        () => {
+          this.perSecondValue += 3;
+        }
+      )
+    );
+
+    this.addClickUpgrade(
+      new Upgrade(
+        "Perche de Récolte",
+        "Atteignez facilement les branches plus hautes",
+        2,
+        50000,
+        1.6,
+        () => {
+          this.clickValue += 10;
+        }
+      )
+    );
+
+    this.addClickUpgrade(
+      new Upgrade(
+        "Brouette à Bananes",
+        "Transportez plus de bananes en une seule fois",
+        2,
+        200000,
+        1.9,
+        () => {
+          this.clickValue += 25;
+        }
+      )
+    );
+
+    this.addClickUpgrade(
+      new Upgrade(
+        "Machette Dorée",
+        "Une lame luxueuse pour une récolte efficace",
+        2,
+        750000,
+        2.3,
+        () => {
+          this.clickValue += 50;
+        }
+      )
+    );
+
+    this.addAutoUpgrade(
+      new Upgrade(
+        "Equipe de Cueilleurs de Bananes",
+        "Engagez une équipe de cueilleurs de bananes qualifiés",
+        2,
+        500000,
+        2,
+        () => {
+          this.perSecondValue += 15;
+        }
+      )
+    );
+
+    this.addAutoUpgrade(
+      new Upgrade(
+        "Machine de Tri des Bananes",
+        "Trie et emballe automatiquement les bananes",
+        2,
+        2000000,
+        2.5,
+        () => {
+          this.perSecondValue += 40;
+        }
+      )
+    );
+
+    this.addClickUpgrade(
+      new Upgrade(
+        "Bras de Récolte Cybernétique",
+        " Une prothèse high-tech pour une cueillette ultra-rapide",
+        3,
+        50000000,
+        1.8,
+        () => {
+          this.clickValue += 200;
+        }
+      )
+    );
+
+    this.addClickUpgrade(
+      new Upgrade(
+        "Gants de Téléportation",
+        "Transportez instantanément les bananes cueillies vers le stockage",
+        3,
+        200000000,
+        2.1,
+        () => {
+          this.clickValue += 500;
+        }
+      )
+    );
+
+    this.addClickUpgrade(
+      new Upgrade(
+        "Machette Distordant le Temps",
+        "Tranchez le temps lui-même pour récolter plus rapidement",
+        3,
+        1000000000,
+        2.7,
+        () => {
+          this.clickValue += 1000;
+        }
+      )
+    );
+
+    this.addAutoUpgrade(
+      new Upgrade(
+        "Drones de Récolte de Bananes",
+        "Une flotte de drones qui cueillent des bananes 24h/24 et 7j/7",
+        3,
+        500000000,
+        2.3,
+        () => {
+          this.perSecondValue += 200;
+        }
+      )
+    );
+
+    this.addAutoUpgrade(
+      new Upgrade(
+        "Accélérateur Génétique de Bananes",
+        "Accélère la croissance des bananes à des niveaux astronomiques",
+        3,
+        250000000,
+        3,
+        () => {
+          this.perSecondValue += 500;
+        }
+      )
+    );
+
+    this.updatePrestigeDisplay();
 
     this.setupTooltip();
     this.startAutoClick();
@@ -193,7 +289,9 @@ class Game {
   updateScoreDisplay(displayScore) {
     const scoreElement = document.getElementById("score");
     // Update the score display
-    scoreElement.textContent = Math.floor(displayScore).toLocaleString();
+    scoreElement.textContent = `${Math.floor(
+      displayScore
+    ).toLocaleString()} Bananas`;
   }
 
   addClickUpgrade(upgrade) {
@@ -211,10 +309,13 @@ class Game {
 
   renderUpgradeCategory(upgrades, container) {
     container.innerHTML = "";
-    upgrades.forEach((upgrade) => {
+    const worldUpgrades = upgrades.filter(
+      (upg) => upg["world"] === this.currentWorld
+    );
+    worldUpgrades.forEach((upgrade) => {
       const button = document.createElement("button");
       const img = new Image();
-      img.src = `../assets/upgrade/${upgrade.name
+      img.src = `../assets/upgrade/${this.replaceAccents(upgrade.name)
         .toLowerCase()
         .replace(" ", "-")}.png`;
 
@@ -351,6 +452,42 @@ class Game {
       tooltip.style.left = e.pageX + 10 + "px";
       tooltip.style.top = e.pageY + 10 + "px";
     });
+  }
+
+  replaceAccents(str) {
+    const withNoAccents = str.replace(
+      /[àáäâãéèëêìíïîìóòöôùúũûñç]/g,
+      function (char) {
+        const replacements = {
+          à: "a",
+          á: "a",
+          ä: "a",
+          â: "a",
+          ã: "a",
+          é: "e",
+          è: "e",
+          ë: "e",
+          ê: "e",
+          ì: "i",
+          í: "i",
+          ï: "i",
+          î: "i",
+          ì: "i",
+          ó: "o",
+          ò: "o",
+          ö: "o",
+          ô: "o",
+          ù: "u",
+          ú: "u",
+          ũ: "u",
+          û: "u",
+          ñ: "n",
+          ç: "c",
+        };
+        return replacements[char] || char; // Fallback for non-mapped characters
+      }
+    );
+    return withNoAccents;
   }
 }
 
