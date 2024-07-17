@@ -36,50 +36,102 @@ class Game {
 
     prestigeButton.addEventListener("click", () => this.prestige());
 
+    // this.addClickUpgrade(
+    //   new Upgrade("Cursor", "Increases click value by 1", 10, 1.5, () => {
+    //     this.clickValue += 1;
+    //   })
+    // );
+
+    // this.addClickUpgrade(
+    //   new Upgrade(
+    //     "Super Cursor",
+    //     "Increases click value by 5",
+    //     100,
+    //     1.7,
+    //     () => {
+    //       this.clickValue += 5;
+    //     }
+    //   )
+    // );
+
+    // this.addClickUpgrade(
+    //   new Upgrade("Banana", "Banana is truth", 1, 2, () => {
+    //     this.clickValue += 10;
+    //   })
+    // );
+
+    // this.addAutoUpgrade(
+    //   new Upgrade(
+    //     "Auto-Clicker",
+    //     "Generates 1 point per second",
+    //     50,
+    //     1.5,
+    //     () => {
+    //       this.perSecondValue += 1;
+    //     }
+    //   )
+    // );
+
+    // this.addAutoUpgrade(
+    //   new Upgrade(
+    //     "Mega Auto-Clicker",
+    //     "Generates 5 points per second",
+    //     200,
+    //     1.7,
+    //     () => {
+    //       this.perSecondValue += 5;
+    //     }
+    //   )
+    // );
+
     this.addClickUpgrade(
-      new Upgrade("Cursor", "Increases click value by 1", 10, 1.5, () => {
-        this.clickValue += 1;
-      })
+      new Upgrade(
+        "Machette Affûtée",
+        "Une lame plus tranchante pour une récolte plus rapide",
+        1,
+        100,
+        1.5,
+        () => {
+          this.clickValue += 1;
+        }
+      )
     );
 
     this.addClickUpgrade(
       new Upgrade(
-        "Super Cursor",
-        "Increases click value by 5",
-        100,
+        "Gants Robustes",
+        "Protégez vos mains et saisissez plus de bananes",
+        1,
+        500,
         1.7,
+        () => {
+          this.clickValue += 3;
+        }
+      )
+    );
+
+    this.addClickUpgrade(
+      new Upgrade(
+        "Sac à Dos à Bananes",
+        "Transportez plus de bananes pendant la récolte",
+        1,
+        2000,
+        2,
         () => {
           this.clickValue += 5;
         }
       )
     );
 
-    this.addClickUpgrade(
-      new Upgrade("Banana", "Banana is truth", 1, 2, () => {
-        this.clickValue += 10;
-      })
-    );
-
     this.addAutoUpgrade(
       new Upgrade(
-        "Auto-Clicker",
-        "Generates 1 point per second",
-        50,
-        1.5,
+        "Singe Serviable",
+        "Un assistant singe qui cueille des bananes pour vous",
+        1,
+        1000,
+        1.8,
         () => {
           this.perSecondValue += 1;
-        }
-      )
-    );
-
-    this.addAutoUpgrade(
-      new Upgrade(
-        "Mega Auto-Clicker",
-        "Generates 5 points per second",
-        200,
-        1.7,
-        () => {
-          this.perSecondValue += 5;
         }
       )
     );
@@ -303,9 +355,10 @@ class Game {
 }
 
 class Upgrade {
-  constructor(name, description, cost, costMultiplier, effect) {
+  constructor(name, description, world, cost, costMultiplier, effect) {
     this.name = name;
     this.description = description;
+    this.world = world;
     this.cost = cost;
     this.initialCost = cost;
     this.costMultiplier = costMultiplier;

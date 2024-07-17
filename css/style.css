@@ -8,6 +8,8 @@
   --clr-highlight-1: #ff7f00;
   --clr-highlight-2: #ffc0cb;
   --clr-highlight-3: #32cd32;
+
+  --clk-btn-size: 30vw;
 }
 
 * {
@@ -110,20 +112,21 @@ body {
 }
 
 #click-button {
-  --btn-size: 20rem;
   cursor: pointer;
   margin-top: 20px;
   /* background-color: transparent; */
-  height: var(--btn-size);
-  width: var(--btn-size);
+  height: var(--clk-btn-size);
+  width: var(--clk-btn-size);
   align-self: center;
-  background: url("../images/click.png") center no-repeat;
+  background: url("../assets/click-the-banana.png") center no-repeat;
   background-size: contain;
   border: none;
   transition: 100ms ease;
 }
 #click-button:active {
-  width: 21rem;
+  --scaling: 1vw;
+  width: calc(var(--clk-btn-size) + var(--scaling));
+  height: calc(var(--clk-btn-size) + var(--scaling));
 }
 
 /* style droite */
