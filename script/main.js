@@ -28,10 +28,19 @@ class Game {
     prestigeButton.dataset.description = `Requirement: ${this.prestigeRequirement}`;
     this.addTooltipListeners(prestigeButton);
 
+    this.worldBtn1 = document.getElementById("worldBtn1");
+    this.worldBtn2 = document.getElementById("worldBtn2");
+    this.worldBtn3 = document.getElementById("worldBtn3");
+
     this.saveButton = document.getElementById("save-button");
     this.loadButton = document.getElementById("load-button");
 
     this.clickButton.addEventListener("click", () => this.click());
+
+    this.worldBtn1.addEventListener("click", () => this.showWorld(1));
+    this.worldBtn2.addEventListener("click", () => this.showWorld(2));
+    this.worldBtn3.addEventListener("click", () => this.showWorld(3));
+
     this.saveButton.addEventListener("click", () => this.saveGame());
     this.loadButton.addEventListener("click", () => this.loadGame());
 
@@ -239,8 +248,6 @@ class Game {
 
     this.updateScore();
     this.renderUpgrades();
-
-    // setInterval(() => this.autoClick(), 1000);
   }
 
   click() {
@@ -332,6 +339,18 @@ class Game {
       this.addTooltipListeners(button);
       container.appendChild(button);
     });
+  }
+
+  showWorld(worldId) {
+    const worldButtons = document.getElementsByClassName("world-button");
+    for (let button of worldButtons) {
+      button.classList.remove("active-world");
+    }
+    document.getElementById(`worldBtn${worldId}`).classList.add("active-world");
+
+    this.currentWorld = worldId;
+
+    this.renderUpgrades();
   }
 
   prestige() {

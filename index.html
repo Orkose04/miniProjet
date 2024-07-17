@@ -20,9 +20,17 @@
     <!-- Espace centrale -->
     <div class="center-side">
       <div class="world-windows">
-        <button id="worldBtn1">World 1</button
-        ><button id="worldBtn2">World 2</button
-        ><button id="worldBtn3">World 3</button>
+        <button
+          id="worldBtn1"
+          class="world-button active-world"
+          onclick="showWorld(1)"
+        >
+          World 1</button
+        ><button id="worldBtn2" class="world-button" onclick="showWorld(2)">
+          World 2</button
+        ><button id="worldBtn3" class="world-button" onclick="showWorld(3)">
+          World 3
+        </button>
       </div>
 
       <img src="./images/level1.png" alt="level" />

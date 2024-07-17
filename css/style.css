@@ -252,6 +252,20 @@ body {
 .world-windows {
   position: absolute;
   top: 1rem;
+
+  & button {
+    padding: 1rem;
+  }
+}
+
+.active-world {
+  background: green;
+}
+
+.deactivated {
+  pointer-events: none;
+  background: #333;
+  color: #aaa;
 }
 
 .save-buttons {
