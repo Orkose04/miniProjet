@@ -4,6 +4,21 @@ class Game {
     this.clickValue = 1;
     this.perSecondValue = 0;
     this.currentWorld = 1;
+    this.currentLevel = 1;
+    this.clipPath = {
+      1: {
+        1: "polygon(50% 44%, 68% 55%, 50% 65%, 32% 55%)",
+        2: "polygon(68% 34%, 85% 46%, 50% 65%, 32% 56%)",
+        3: "polygon(67% 35%, 85% 46%, 33% 75%, 15% 65%)",
+        4: "polygon(15% 65%, 68% 34%, 85% 46%, 68% 55%, 84% 65%, 67% 74%, 50% 65%, 33% 75%)",
+      },
+      2: {
+        1: "polygon(50% 44%, 68% 55%, 50% 65%, 32% 55%)",
+        2: "polygon(68% 34%, 85% 46%, 50% 65%, 32% 56%)",
+        3: "polygon(68% 36%, 85% 47%, 68% 56%, 85% 67%, 67% 76%, 32% 57%)",
+        4: "polygon(15% 65%, 68% 34%, 85% 46%, 68% 55%, 84% 65%, 67% 74%, 50% 65%, 33% 75%)",
+      },
+    };
     this.clickUpgrades = [];
     this.autoUpgrades = [];
     this.prestigeMultiplier = 1;
@@ -35,7 +50,10 @@ class Game {
     this.saveButton = document.getElementById("save-button");
     this.loadButton = document.getElementById("load-button");
 
-    this.clickButton.addEventListener("click", () => this.click());
+    this.clickButton.addEventListener("click", (event) => {
+      this.updateCounter(event);
+      this.click();
+    });
 
     this.worldBtn1.addEventListener("click", () => this.showWorld(1));
     this.worldBtn2.addEventListener("click", () => this.showWorld(2));
@@ -51,6 +69,7 @@ class Game {
         "Machette Affûtée",
         "Une lame plus tranchante pour une récolte plus rapide",
         1,
+        1,
         100,
         1.5,
         () => {
@@ -64,6 +83,7 @@ class Game {
         "Gants Robustes",
         "Protégez vos mains et saisissez plus de bananes",
         1,
+        3,
         500,
         1.7,
         () => {
@@ -72,24 +92,26 @@ class Game {
       )
     );
 
-    this.addClickUpgrade(
-      new Upgrade(
-        "Sac à Dos à Bananes",
-        "Transportez plus de bananes pendant la récolte",
-        1,
-        2000,
-        2,
-        () => {
-          this.clickValue += 5;
-        }
-      )
-    );
+    // this.addClickUpgrade(
+    //   new Upgrade(
+    //     "Sac à Dos à Bananes",
+    //     "Transportez plus de bananes pendant la récolte",
+    //     1,
+    //     4,
+    //     2000,
+    //     2,
+    //     () => {
+    //       this.clickValue += 5;
+    //     }
+    //   )
+    // );
 
     this.addAutoUpgrade(
       new Upgrade(
         "Singe Serviable",
         "Un assistant singe qui cueille des bananes pour vous",
         1,
+        2,
         1000,
         1.8,
         () => {
@@ -103,6 +125,7 @@ class Game {
         "Système d'Arrosage",
         "Arrosage automatisé pour des bananiers en meilleure santé",
         1,
+        4,
         5000,
         2.2,
         () => {
@@ -116,6 +139,7 @@ class Game {
         "Perche de Récolte",
         "Atteignez facilement les branches plus hautes",
         2,
+        1,
         50000,
         1.6,
         () => {
@@ -129,6 +153,7 @@ class Game {
         "Brouette à Bananes",
         "Transportez plus de bananes en une seule fois",
         2,
+        3,
         200000,
         1.9,
         () => {
@@ -137,23 +162,25 @@ class Game {
       )
     );
 
-    this.addClickUpgrade(
-      new Upgrade(
-        "Machette Dorée",
-        "Une lame luxueuse pour une récolte efficace",
-        2,
-        750000,
-        2.3,
-        () => {
-          this.clickValue += 50;
-        }
-      )
-    );
+    // this.addClickUpgrade(
+    //   new Upgrade(
+    //     "Machette Dorée",
+    //     "Une lame luxueuse pour une récolte efficace",
+    //     2,
+    //     4,
+    //     750000,
+    //     2.3,
+    //     () => {
+    //       this.clickValue += 50;
+    //     }
+    //   )
+    // );
 
     this.addAutoUpgrade(
       new Upgrade(
         "Equipe de Cueilleurs de Bananes",
         "Engagez une équipe de cueilleurs de bananes qualifiés",
+        2,
         2,
         500000,
         2,
@@ -168,6 +195,7 @@ class Game {
         "Machine de Tri des Bananes",
         "Trie et emballe automatiquement les bananes",
         2,
+        4,
         2000000,
         2.5,
         () => {
@@ -181,6 +209,7 @@ class Game {
         "Bras de Récolte Cybernétique",
         " Une prothèse high-tech pour une cueillette ultra-rapide",
         3,
+        1,
         50000000,
         1.8,
         () => {
@@ -194,6 +223,7 @@ class Game {
         "Gants de Téléportation",
         "Transportez instantanément les bananes cueillies vers le stockage",
         3,
+        3,
         200000000,
         2.1,
         () => {
@@ -202,24 +232,26 @@ class Game {
       )
     );
 
-    this.addClickUpgrade(
-      new Upgrade(
-        "Machette Distordant le Temps",
-        "Tranchez le temps lui-même pour récolter plus rapidement",
-        3,
-        1000000000,
-        2.7,
-        () => {
-          this.clickValue += 1000;
-        }
-      )
-    );
+    // this.addClickUpgrade(
+    //   new Upgrade(
+    //     "Machette Distordant le Temps",
+    //     "Tranchez le temps lui-même pour récolter plus rapidement",
+    //     3,
+    //     4,
+    //     1000000000,
+    //     2.7,
+    //     () => {
+    //       this.clickValue += 1000;
+    //     }
+    //   )
+    // );
 
     this.addAutoUpgrade(
       new Upgrade(
         "Drones de Récolte de Bananes",
         "Une flotte de drones qui cueillent des bananes 24h/24 et 7j/7",
         3,
+        2,
         500000000,
         2.3,
         () => {
@@ -233,6 +265,7 @@ class Game {
         "Accélérateur Génétique de Bananes",
         "Accélère la croissance des bananes à des niveaux astronomiques",
         3,
+        4,
         250000000,
         3,
         () => {
@@ -241,6 +274,12 @@ class Game {
       )
     );
 
+    // this.addClickUpgrade(
+    //   new Upgrade("Cheat", "", 1, 1, 1, 1, () => {
+    //     this.clickValue += 10000;
+    //   })
+    // );
+
     this.updatePrestigeDisplay();
 
     this.setupTooltip();
@@ -248,11 +287,27 @@ class Game {
 
     this.updateScore();
     this.renderUpgrades();
+    this.updateWorld();
   }
 
   click() {
     this.score += this.clickValue * this.prestigeMultiplier;
     this.updateScore();
+  }
+
+  updateCounter(event) {
+    const counter = document.createElement("div");
+    counter.textContent = `+${this.clickValue}`;
+    counter.style.setProperty("--x", `${event.offsetX}px`);
+    counter.style.setProperty("--y", `${event.offsetY}px`);
+
+    counter.classList.add("pop-up");
+
+    counter.addEventListener("animationend", () => {
+      counter.remove();
+    });
+
+    this.clickButton.appendChild(counter);
   }
 
   smoothAutoClick() {
@@ -322,7 +377,7 @@ class Game {
     worldUpgrades.forEach((upgrade) => {
       const button = document.createElement("button");
       const img = new Image();
-      img.src = `../assets/upgrade/${this.replaceAccents(upgrade.name)
+      img.src = `../assets/upgrades/${this.replaceAccents(upgrade.name)
         .toLowerCase()
         .replace(" ", "-")}.png`;
 
@@ -335,10 +390,68 @@ class Game {
 
       button.dataset.description = upgrade.description; // Store description in data attribute
 
+      if (this.currentLevel < (upgrade.world - 1) * 4 + upgrade.tier) {
+        button.classList.add("locked");
+
+        const lockedImg = new Image();
+        lockedImg.src = `../assets/locked.png`;
+        lockedImg.className = "locked-image";
+
+        // button.appendChild(lockedImg);
+      }
+
       button.addEventListener("click", () => this.buyUpgrade(upgrade));
       this.addTooltipListeners(button);
       container.appendChild(button);
     });
+  }
+
+  updateWorld() {
+    const overlay = document.getElementById("overlay");
+    const level = this.getLevelOutput(this.currentLevel, this.currentWorld);
+    let worldImg = document.getElementById("world-image");
+    worldImg.src =
+      `../assets/world/world` + this.currentWorld + "-" + level + ".png";
+
+    overlay.style.setProperty(
+      "--clip-path",
+      `${
+        this.clipPath[this.currentWorld][
+          !(this.currentLevel % 4) ? 4 : this.currentLevel % 4
+        ]
+      }`
+    );
+
+    let availableUpgrades = this.clickUpgrades
+      .concat(this.autoUpgrades)
+      .sort((a, b) => {
+        a.level - b.level;
+      });
+    console.log(availableUpgrades);
+
+    overlay.addEventListener("mouseenter", () => {
+      worldImg.src =
+        `../assets/world/world` + this.currentWorld + "-" + level + "h.png";
+    });
+
+    overlay.addEventListener("mouseleave", () => {
+      worldImg.src =
+        `../assets/world/world` + this.currentWorld + "-" + level + ".png";
+    });
+  }
+
+  getLevelOutput(currentLevel, currentWorld) {
+    if (currentLevel <= 4) {
+      return currentLevel;
+    } else if (currentLevel <= 8) {
+      if (currentWorld === 1) {
+        return 4;
+      } else if (currentWorld === 2) {
+        return currentLevel - 4;
+      }
+    } else {
+      return 4;
+    }
   }
 
   showWorld(worldId) {
@@ -350,6 +463,7 @@ class Game {
 
     this.currentWorld = worldId;
 
+    this.updateWorld();
     this.renderUpgrades();
   }
 
@@ -359,6 +473,8 @@ class Game {
       this.score = 0;
       this.clickValue = 1;
       this.perSecondValue = 0;
+      this.currentWorld = 1;
+      this.currentLevel = 1;
       this.prestigeRequirement *= 10; // Increase requirement for next prestige
 
       // Reset upgrades
@@ -398,6 +514,20 @@ class Game {
   buyUpgrade(upgrade) {
     if (this.score >= upgrade.cost) {
       this.score -= upgrade.cost;
+      if (!upgrade.purchased) {
+        this.currentLevel++;
+        this.updateWorld();
+      }
+
+      switch (this.currentLevel) {
+        case 5:
+          document.getElementById("worldBtn2").classList.remove("locked");
+          break;
+        case 9:
+          alert("Thank you for playing!");
+          break;
+      }
+
       upgrade.purchase();
       upgrade.cost *= upgrade.costMultiplier;
       this.updateScore();
@@ -410,6 +540,7 @@ class Game {
       score: this.score,
       clickValue: this.clickValue,
       perSecondValue: this.perSecondValue,
+      currentLevel: this.currentLevel,
       clickUpgrades: this.clickUpgrades.map((upgrade) => ({
         name: upgrade.name,
         cost: upgrade.cost,
@@ -434,6 +565,8 @@ class Game {
       this.score = gameData.score;
       this.clickValue = gameData.clickValue;
       this.perSecondValue = gameData.perSecondValue;
+
+      this.currentLevel = gameData.currentLevel;
 
       this.prestigeMultiplier = gameData.prestigeMultiplier || 1;
       this.prestigeRequirement = gameData.prestigeRequirement || 1000000;
@@ -511,10 +644,12 @@ class Game {
 }
 
 class Upgrade {
-  constructor(name, description, world, cost, costMultiplier, effect) {
+  constructor(name, description, world, tier, cost, costMultiplier, effect) {
     this.name = name;
     this.description = description;
     this.world = world;
+    this.tier = tier;
+    this.level = (this.world - 1) * 4 + this.tier;
     this.cost = cost;
     this.initialCost = cost;
     this.costMultiplier = costMultiplier;

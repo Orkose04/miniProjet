@@ -15,7 +15,11 @@
         <div id="per-second">Or par seconde : 0.0</div>
         <div id="prestige-multiplier">x1.0</div>
       </div>
-      <button id="click-button"></button>
+      <div id="click-button-container">
+        <button id="click-button"></button>
+        <span id="counter"></span>
+      </div>
+      <img class="plante" src="assets/plants/plante3.png" alt="plante3" />
     </div>
     <!-- Espace centrale -->
     <div class="center-side">
@@ -26,20 +30,52 @@
           onclick="showWorld(1)"
         >
           World 1</button
-        ><button id="worldBtn2" class="world-button" onclick="showWorld(2)">
+        ><button
+          id="worldBtn2"
+          class="world-button locked"
+          onclick="showWorld(2)"
+        >
           World 2</button
-        ><button id="worldBtn3" class="world-button" onclick="showWorld(3)">
+        ><button
+          id="worldBtn3"
+          class="world-button locked"
+          onclick="showWorld(3)"
+        >
           World 3
         </button>
       </div>
 
-      <img src="./images/level1.png" alt="level" />
+      <div id="world-container">
+        <img id="world-image" src="./assets/world/world1-1.png" alt="level" />
+        <div id="overlay"></div>
+      </div>
 
       <div class="save-buttons">
-        <button class="button" id="save-button">Save</button>
-        <button class="button" id="load-button">Load</button>
-        <button class="button" id="prestige-button">Prestige</button>
+        <button id="save-button">Save</button>
+        <button id="load-button">Load</button>
+        <button id="prestige-button">Prestige</button>
       </div>
+
+      <img
+        src="./assets/plants/plante4.png"
+        alt="plante4"
+        class="plante top-left"
+      />
+      <img
+        src="./assets/plants/plante6.png"
+        alt="plante5"
+        class="plante top-right"
+      />
+      <img
+        src="./assets/plants/plante5.png"
+        alt="plante6"
+        class="plante bottom-left"
+      />
+      <img
+        src="./assets/plants/plante7.png"
+        alt="plante7"
+        class="plante bottom-right"
+      />
     </div>
     <!-- Partie droite de l'ecran -->
     <div class="right-side">
@@ -59,107 +95,8 @@
           CPS
         </button>
       </div>
-      <!-- vente des articles CPC -->
-      <!-- <div class="bigShopCPC">
-        <br />
-        <div class="blocArticle">
-          <img src="./images/plat/chicken_tacos.webp" alt="chicken" />
-          <div>
-            <h3>Chicken</h3>
-            <p class="priceArticle">2.200 Ar</p>
-          </div>
-          <div class="infoBox">
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-              laudantium numquam unde beatae iusto corrupti. Sit quas animi
-              architecto nam tenetur, modi excepturi distinctio soluta inventore
-              quidem, odio, rerum at?
-            </p>
-          </div>
-        </div>
-        <div class="blocArticle">
-          <img src="./images/plat/pizza_fromage.webp" alt="chicken" />
-          <div>
-            <h3>PIZZA</h3>
-            <p class="priceArticle">2.200 Ar</p>
-          </div>
-          <div class="infoBox">
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-              laudantium numquam unde beatae iusto corrupti. Sit quas animi
-              architecto nam tenetur, modi excepturi distinctio soluta inventore
-              quidem, odio, rerum at?
-            </p>
-          </div>
-        </div>
-        <div class="blocArticle">
-          <img src="./images/plat/pork-steak.webp" alt="chicken" />
-          <div>
-            <h3>Steak</h3>
-            <p class="priceArticle">2.200 Ar</p>
-          </div>
-          <div class="infoBox">
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-              laudantium numquam unde beatae iusto corrupti. Sit quas animi
-              architecto nam tenetur, modi excepturi distinctio soluta inventore
-              quidem, odio, rerum at?
-            </p>
-          </div>
-        </div>
-      </div>-->
       <!-- Ameliorations par Click -->
       <div id="click-upgrades-container" class="upgrades active"></div>
-
-      <!-- vente des articles CPC --
-      <div class="bigShopCPS">
-        <br />
-        <div class="blocArticle">
-          <img src="./images/ingredients/jambon.webp" alt="chicken" />
-          <div>
-            <h3>Chicken</h3>
-            <p class="priceArticle">2.200 Ar</p>
-          </div>
-          <div class="infoBox">
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-              laudantium numquam unde beatae iusto corrupti. Sit quas animi
-              architecto nam tenetur, modi excepturi distinctio soluta inventore
-              quidem, odio, rerum at?
-            </p>
-          </div>
-        </div>
-        <div class="blocArticle">
-          <img src="./images/ingredients/Oignon.webp" alt="chicken" />
-          <div>
-            <h3>Oignon</h3>
-            <p class="priceArticle">2.200 Ar</p>
-          </div>
-          <div class="infoBox">
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-              laudantium numquam unde beatae iusto corrupti. Sit quas animi
-              architecto nam tenetur, modi excepturi distinctio soluta inventore
-              quidem, odio, rerum at?
-            </p>
-          </div>
-        </div>
-        <div class="blocArticle">
-          <img src="./images/ingredients/salade.webp" alt="chicken" />
-          <div>
-            <h3>Salade</h3>
-            <p class="priceArticle">2.200 Ar</p>
-          </div>
-          <div class="infoBox">
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-              laudantium numquam unde beatae iusto corrupti. Sit quas animi
-              architecto nam tenetur, modi excepturi distinctio soluta inventore
-              quidem, odio, rerum at?
-            </p>
-          </div>
-        </div>
-      </div> -->
       <!-- Ameliorations par seconde -->
       <div id="auto-upgrades-container" class="upgrades"></div>
 
@@ -167,6 +104,5 @@
       <div id="tooltip"></div>
     </div>
   </body>
-  <!-- <script src="./script/onglet.js"></script> -->
   <script src="script/main.js"></script>
 </html>
